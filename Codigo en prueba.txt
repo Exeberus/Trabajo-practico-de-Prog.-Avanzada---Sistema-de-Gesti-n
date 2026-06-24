@@ -1,0 +1,22 @@
+    def gestion_menu(self):
+        
+        comando = "None"
+
+        while (comando.lower() != "x"):
+
+            comando = input(
+                f" - Ingrese numero de comando para iniciar una función con el producto iniciado -\
+                \n Ingresar 0 para ver lista de comandos\
+                \n Comando :\
+                ")
+
+            if (comando == "0"):
+
+                print(
+                    f" - Lista de Comandos -\
+                    \n Mostrar informacion del producto [1]\
+                    ")
+                    
+            elif (comando == "1"):
+                    
+                self.mostrar_informacion()
