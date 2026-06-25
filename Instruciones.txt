@@ -11,3 +11,4 @@ Al ejecutar el programa deberá ingresar números de comando para utilizar las d
 [2] Mostrar información de productos almacenados
 [3] Calcular impuestos de productos
 [4] Calcular precio total de stock
+[5] Buscar producto por id

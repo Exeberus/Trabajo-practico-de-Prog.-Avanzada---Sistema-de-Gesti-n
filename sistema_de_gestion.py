@@ -1,6 +1,6 @@
-class Producto(): ## Primera clase
+class Producto():
 
-    def __init__ (self, id, nombre, precio, stock, proveedor): ## init para crear el producto
+    def __init__ (self, id, nombre, precio, stock, proveedor):
 
         self.id = id
         self.nombre = nombre
@@ -13,13 +13,23 @@ class Producto(): ## Primera clase
         print(
             f"\n Informacion del Producto ID[{self.id}]"
             f"\n Nombre : {self.nombre}"
-            f"\n Precio : {self.precio}"
+            f"\n Precio : ${self.precio}"
+            f"\n Impuesto : ${self.calculo_impuestos()}"
+            f"\n Precio final : ${self.calculo_precio_final()}"
+            f"\n Precio del Stock con Impuestos : ${self.calculo_precio_final_stock()}"
             f"\n Stock : {self.stock}"
             f"\n Proveedor : {self.proveedor.nombre} | Telefono : {self.proveedor.telefono}"
+           
         )
         
     def calculo_impuestos(self):
         return 0
+    
+    def calculo_precio_final(self):
+        return self.precio + self.calculo_impuestos()
+    
+    def calculo_precio_final_stock(self):
+        return self.calculo_precio_final() * self.stock
     
 class ProductoElectronico(Producto):
 
@@ -51,7 +61,7 @@ class ProductoFactory():
         
         elif (tipo == "construccion"):
 
-            return ProductoAlimenticio(id, nombre, precio, stock, proveedor)
+            return ProductoConstruccion(id, nombre, precio, stock, proveedor)
         
         else:
             return Producto(id, nombre, precio, stock, proveedor)
@@ -61,6 +71,16 @@ class Inventario():
     def __init__(self):
 
         self.productos = []
+
+    def buscar_producto(self, id_producto):
+
+        for producto in self.productos:
+
+            if producto.id == id_producto:
+
+                return producto
+            
+        return None
 
     def agregar_producto(self, producto):
 
@@ -97,11 +117,12 @@ def menu():
 
             print(
             "\n- Lista de Comandos - \n" \
-            "\n [X] Terminar comando" \
+            "\n [X] Terminar programa" \
             "\n [1] Agregar un producto" \
-            "\n [2] Mostrar infomación de productos almacenados"
+            "\n [2] Mostrar información de productos almacenados"
             "\n [3] Calcular impuestos de productos"
             "\n [4] Calcular precio total de stock"
+            "\n [5] Buscar producto por id"
             )
 
         if (id_comando == "1"):
@@ -124,22 +145,32 @@ def menu():
 
         if (id_comando == "2"):
 
+            if len(inventario.productos) == 0:
+
+                print("\n - [No hay productos en el inventario] - ")
+
             inventario.mostrar_productos()
 
         if (id_comando == "3"):
 
+            if len(inventario.productos) == 0:
+
+                print("\n - [No hay productos en el inventario] - ")
+
             for producto in inventario.productos:
 
                 print(
-                    f"\nID[{producto.id}]"
+                    f"\nID [{producto.id}]"
                     f"\nProducto : {producto.nombre}"
+                    f"\nPrecio individual : ${producto.precio}"
                     f"\nImpuesto : ${producto.calculo_impuestos()}"
                     )
                 
         if (id_comando == "4"):
 
             if len(inventario.productos) == 0:
-                print("\n - No hay productos en el inventario - ")
+
+                print("\n - [No hay productos en el inventario] - ")
 
             for producto in inventario.productos:
 
@@ -148,7 +179,29 @@ def menu():
                     f"\nProducto : {producto.nombre}"
                     f"\nStock : {producto.stock}" 
                     f"\nPrecio individual : ${producto.precio}"
-                    f"\nPrecio Total : ${producto.precio * producto.stock}"
+                    f"\nPrecio total : ${producto.precio * producto.stock}"
+                    f"\nPrecio total con impuestos: ${producto.calculo_precio_final_stock()}"
                 )
+
+        if (id_comando == "5"):
+
+            if len(inventario.productos) == 0 :
+
+                print("\n - [No hay productos en el inventario] - ")
+
+                continue
+
+            id_busqueda = int(input("Ingrese el id del producto : "))
+
+            producto = inventario.buscar_producto(id_busqueda)
+
+            if producto:
+
+                print("Producto encontrado:")
+                producto.mostrar_informacion()
+
+            else:
+
+                print("\nNo se ha encontrado el producto")
 
 menu()
