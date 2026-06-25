@@ -1,0 +1,13 @@
+[Instrucciones]
+
+Para poder usar el programa debe ser ejecutado mediante consola como CMD o Powershell (Se debe tener descargado Python en su dispositivo), también puede ser ejecutado en interpretadores de código como Visual Studio.
+
+Al ejecutar el programa deberá ingresar números de comando para utilizar las diferentes funciones del programa.
+
+[Lista de Comandos]
+
+[X] Terminar programa
+[1] Agregar un producto
+[2] Mostrar información de productos almacenados
+[3] Calcular impuestos de productos
+[4] Calcular precio total de stock
